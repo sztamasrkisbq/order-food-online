@@ -56,8 +56,10 @@ public class CustomerController {
     }
 
     @GetMapping(path="/login")
-    public @ResponseBody CustomerBean getCustomer(@RequestParam(value = "mail") String mail, @RequestParam(value = "pwd") String pwd) {
-        return new CustomerBean(customerRepository.findByEmailAndPassword(mail,pwd));
+    public @ResponseBody CustomerBean getCustomer(@RequestParam(name = "mail") String mail, @RequestParam(name = "pwd") String pwd) {
+        CustomerBean b=new CustomerBean(customerRepository.findByEmailAndPassword(mail,pwd));
+        System.out.println(b.toString());
+        return b;
     }
 
 }

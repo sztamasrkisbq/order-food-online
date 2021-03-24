@@ -32,8 +32,9 @@ public class RestaurantController {
 
 
     @PostMapping(path="/register")
-    public @ResponseBody Boolean addRestaurant(@NotNull RestaurantBean rbean)
+    public @ResponseBody Boolean addRestaurant(@RequestBody RestaurantBean rbean)
     {
+        System.out.println(rbean.toString());
         if(restaurantRepository.save(rbean.toEntity())!=null)
         {
             return true;
@@ -52,8 +53,13 @@ public class RestaurantController {
         return new RestaurantBean(restaurantRepository.findById(id).get());
     }
 
+    @GetMapping(path="/getRest")
+    public @ResponseBody RestaurantBean getRestaurantById(@RequestParam(value = "id") Integer id) {
+        return new RestaurantBean(restaurantRepository.findById(id).get());
+    }
+
     @PostMapping("/update")
-    public @ResponseBody Boolean updateRestaurant(@NotNull RestaurantBean restaurantBean){
+    public @ResponseBody Boolean updateRestaurant(@RequestBody RestaurantBean restaurantBean){
         if(restaurantRepository.updateRestaurantById(restaurantBean.getId(),restaurantBean.getName(),restaurantBean.getAddress(),restaurantBean.openToString(),restaurantBean.getPhonenumber(),restaurantBean.getEmail())==1)
         {
             return true;
@@ -63,8 +69,9 @@ public class RestaurantController {
         }
     }
     @PostMapping("/addMenu")
-    public @ResponseBody Integer addMenu(@RequestParam(value = "restId") Integer restId,@NotNull MenuBean menuBean){
-        Menu m = menuRepository.save(menuBean.toEntity(getRestaurant(restId).toEntity()));
+    public @ResponseBody Integer addMenu(@RequestBody MenuBean menuBean){
+        System.out.println(menuBean.toString());
+        Menu m = menuRepository.save(menuBean.toEntity(new RestaurantBean(restaurantRepository.findById(menuBean.getRestaurantid()).get()).toEntity()));
         if(m!=null){
         return m.getId();}
         else
@@ -106,7 +113,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/addFood")
-    public @ResponseBody Integer addFood(@RequestParam(value = "restId") Integer restid,@RequestParam(value = "menuId") Integer menuid,@NotNull FoodBean foodBean){
+    public @ResponseBody Integer addFood(@RequestParam(value = "restId") Integer restid,@RequestParam(value = "menuId") Integer menuid,@RequestBody FoodBean foodBean){
         Food f=foodRepository.save(foodBean.toEntity(getMenuInner(menuid).toEntity(getRestaurant(restid).toEntity())));
         if(f!=null){
         return f.getId();}
@@ -121,7 +128,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/updateFood")
-    public @ResponseBody Boolean updateFood(@NotNull FoodBean foodBean){
+    public @ResponseBody Boolean updateFood(@RequestBody FoodBean foodBean){
         if(foodRepository.updateFoodById(foodBean.getId(),foodBean.getName(),foodBean.getStarttime(),foodBean.getEndtime(),foodBean.getPrice(),foodBean.getAllergens(),foodBean.getIngredients(),foodBean.getMenuid())==1)
         {
             return true;

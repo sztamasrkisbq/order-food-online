@@ -40,9 +40,6 @@ public class Restaurant implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -70,6 +67,9 @@ public class Restaurant implements Serializable {
 
     public String getPhoneNum() {
         return phoneNum;
+    }
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setPhoneNum(String phoneNum) {

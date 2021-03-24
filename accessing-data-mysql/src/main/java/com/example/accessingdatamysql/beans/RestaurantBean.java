@@ -36,10 +36,12 @@ public class RestaurantBean {
 
     }
     private Map<String,String>getOpen(String open){
+        //System.out.println(open);
         Map<String,String> map =new HashMap<>();
-        String[] days=open.split("|");
+        String[] days=open.split("\\|");
         for(String s:days)
         {
+            //System.out.println(s);
             String[] splits=s.split("_");
             map.put(splits[0],splits[1]);
         }
@@ -140,5 +142,8 @@ public class RestaurantBean {
                 ", password='" + password + '\'' +
                 ", menu=" + menu +
                 '}';
+    }
+
+    public RestaurantBean() {
     }
 }

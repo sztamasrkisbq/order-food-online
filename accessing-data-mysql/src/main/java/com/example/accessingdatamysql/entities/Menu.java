@@ -18,7 +18,7 @@ public class Menu implements Serializable {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "FK_RestaurantId",referencedColumnName = "Restaurant_Id")
+    @JoinColumn(name = "FK_Restaurantid",referencedColumnName = "Restaurant_Id")
     private Restaurant restaurant;
 
     public Integer getId() {
