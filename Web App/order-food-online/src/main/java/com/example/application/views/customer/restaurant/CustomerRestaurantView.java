@@ -31,31 +31,44 @@ public class CustomerRestaurantView extends VerticalLayout {
     //TextField address;
     private CustomerClientService service;
     List<Restaurant> data=new ArrayList<>();
+    private ListDataProvider<Restaurant> dataProvider;
+    RestaurantFilter filterObject;
 
     public CustomerRestaurantView(@Autowired CustomerClientService service) {
         this.service = service;
-
-        this.service.getRestaurantList(results -> {
-            getUI().get().access(() -> {
-
-                System.out.println(results);
-                data=results;
-            });
-        });
         grid=new Grid<>();
-        final ListDataProvider<Restaurant> dataProvider = new ListDataProvider<>(
-                data);
+        grid.addColumn(Restaurant::getName).setHeader("Név");
+        grid.addColumn(Restaurant::getAddress).setHeader("Cím");
+        filterObject=new RestaurantFilter();
+
+        dataProvider = new ListDataProvider<>(data);
         grid.setDataProvider(dataProvider);
-        HorizontalLayout layout=new HorizontalLayout();
-        RestaurantFilter filterObject=new RestaurantFilter();
         dataProvider.setFilter(restaurant->filterObject.test(restaurant));
+        this.service.getRestaurantList(results -> {
+            System.out.println(results);
+            data=results;
+            filter.getUI().get().access(() ->{
+                    dataProvider.getItems().clear();
+                    dataProvider.getItems().addAll(data);
+                    dataProvider.refreshAll();
+                    }
+            );
+
+
+
+        });
+        System.out.println(data.size());
+
         filter=new TextField("Szűrő");
         filter.addValueChangeListener(e ->{
             filterObject.setAddress(e.getValue());
             dataProvider.refreshAll();
         });
-        //address=new TextField("Cím");
-        layout.add(filter);
-        add(layout,grid);
+
+        add(filter,grid);
+    }
+
+    private void getList(){
+
     }
 }

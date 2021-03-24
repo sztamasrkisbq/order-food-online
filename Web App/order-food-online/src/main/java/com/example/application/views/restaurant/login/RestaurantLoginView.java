@@ -1,5 +1,6 @@
 package com.example.application.views.restaurant.login;
 
+import com.example.application.Singleton;
 import com.example.application.data.entity.Customer;
 import com.example.application.data.entity.Restaurant;
 import com.example.application.data.service.RestaurantClientService;
@@ -23,6 +24,7 @@ public class RestaurantLoginView extends HorizontalLayout {
 
     private Button reg;
     private LoginForm login;
+    Restaurant r;
 
     private final RestaurantClientService service;
 
@@ -33,9 +35,9 @@ public class RestaurantLoginView extends HorizontalLayout {
         reg = new Button("Regisztráció");
         login.addLoginListener(loginEvent -> {
             this.service.login(loginEvent.getUsername(),loginEvent.getPassword(), results -> {
-                ComponentUtil.setData(UI.getCurrent(), Restaurant.class, results);
-                login.getUI().ifPresent(ui ->
-                        ui.navigate("etterem/menulist"));
+
+                ComponentUtil.setData(login.getUI().get(),Restaurant.class,results);
+                asd();
             });
         });
         reg = new Button("Regisztráció");
@@ -46,4 +48,10 @@ public class RestaurantLoginView extends HorizontalLayout {
         add(login,reg);
     }
 
+
+    void asd(){
+        getUI().get().access(() -> {
+        login.getUI().ifPresent(ui ->
+                ui.navigate("etterem/menulist"));
+    });}
 }

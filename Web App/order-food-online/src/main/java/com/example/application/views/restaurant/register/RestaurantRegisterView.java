@@ -107,6 +107,7 @@ public class RestaurantRegisterView extends VerticalLayout {
             phone.addValueChangeListener(event -> emailBinding.validate());
 
 
+
             binder.forField(password)
                     .withValidator(new StringLengthValidator(
                             "Adjon meg egy legalább 8 karakter hosszú jelszót", 8, null))
@@ -118,12 +119,12 @@ public class RestaurantRegisterView extends VerticalLayout {
 
 
             reg.addClickListener(event -> {
+                r.setOpen(days);
                 if (binder.writeBeanIfValid(r)) {
-                    infoLabel.setText("Saved bean values: " + r);
+                    infoLabel.setText("Étterem elmentve: " + r);
                     this.service.registerRestaurant(r,results -> {
                         if(results){
-                        reg.getUI().ifPresent(ui ->
-                                ui.navigate("etterem/login"));}
+                        }
                         else{
                             BinderValidationStatus<Restaurant> validate = binder.validate();
                             String errorText = validate.getFieldValidationStatuses()
@@ -134,6 +135,8 @@ public class RestaurantRegisterView extends VerticalLayout {
                             infoLabel.setText("Hibát észleltünk: " + errorText);
                         }
                     });
+                    reg.getUI().ifPresent(ui ->
+                            ui.navigate("etterem/login"));
                 } else {
                     BinderValidationStatus<Restaurant> validate = binder.validate();
                     String errorText = validate.getFieldValidationStatuses()

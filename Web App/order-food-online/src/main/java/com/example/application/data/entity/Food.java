@@ -4,129 +4,129 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 public class Food {
-    private Integer Id;
-    private String Name;
-    private Date Starttime;
-    private Date Endtime;
-    private String Allergens;
-    private String Ingredients;
-    private Integer Price;
-    private Integer Menuid;
+    private Integer id;
+    private String name;
+    private Date starttime;
+    private Date endtime;
+    private String allergens;
+    private String ingredients;
+    private Integer price;
+    private Integer menuid;
 
     public Food(String name, Date startTime, Date endTime, String Allergens, String ingredients, Integer price, Integer menuId) {
-        Name = name;
-        this.Starttime = startTime;
-        this.Endtime = endTime;
-        this.Allergens = Allergens;
-        this.Ingredients = ingredients;
-        this.Price = price;
-        this.Menuid = menuId;
+        this.name = name;
+        this.starttime = startTime;
+        this.endtime = endTime;
+        this.allergens = Allergens;
+        this.ingredients = ingredients;
+        this.price = price;
+        this.menuid = menuId;
     }
 
     public Food() {
     }
 
     public Food(Integer id, String name, Date startTime, Date endTime, String Allergens, String ingredients, Integer price, Integer menuId) {
-        Id = id;
-        Name = name;
-        this.Starttime = startTime;
-        this.Endtime = endTime;
-        this.Allergens = Allergens;
-        this.Ingredients = ingredients;
-        this.Price = price;
-        this.Menuid = menuId;
+        this.id = id;
+        this.name = name;
+        this.starttime = startTime;
+        this.endtime = endTime;
+        this.allergens = Allergens;
+        this.ingredients = ingredients;
+        this.price = price;
+        this.menuid = menuId;
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public Integer getMenuId() {
-        return Menuid;
+    public Integer getMenuid() {
+        return menuid;
     }
 
-    public void setMenuId(Integer menuId) {
-        this.Menuid = menuId;
+    public void setMenuid(Integer menuId) {
+        this.menuid = menuId;
     }
 
-    public Date getStartTime() {
-        return Starttime;
+    public Date getStarttime() {
+        return starttime;
     }
 
-    public void setStartTime(Date startTime) {
-        this.Starttime = startTime;
+    public void setStarttime(Date startTime) {
+        this.starttime = startTime;
     }
 
-    public Date getEndTime() {
-        return Endtime;
+    public Date getEndtime() {
+        return endtime;
     }
 
-    public void setEndTime(Date endTime) {
-        this.Endtime = endTime;
+    public void setEndtime(Date endTime) {
+        this.endtime = endTime;
     }
     public LocalDate getStartTimeLocal() {
-        return Starttime.toLocalDate();
+        return starttime.toLocalDate();
     }
 
     public void setStartTime(LocalDate startTime) {
-        this.Starttime = Date.valueOf(startTime);
+        this.starttime = Date.valueOf(startTime);
     }
 
     public LocalDate getEndTimeLocal() {
-        return Endtime.toLocalDate();
+        return endtime.toLocalDate();
     }
 
     public void setEndTime(LocalDate endTime) {
-        this.Endtime = Date.valueOf(endTime);
+        this.endtime = Date.valueOf(endTime);
     }
 
     public String getAllergens() {
-        return Allergens;
+        return allergens;
     }
 
     public void setAllergens(String Allergens) {
-        this.Allergens = Allergens;
+        this.allergens = Allergens;
     }
 
     public String getIngredients() {
-        return Ingredients;
+        return ingredients;
     }
 
     public void setIngredients(String ingredients) {
-        this.Ingredients = ingredients;
+        this.ingredients = ingredients;
     }
 
     public Integer getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(Integer price) {
-        this.Price = price;
+        this.price = price;
     }
 
     @Override
     public String toString() {
         return "Food{" +
-                "Id=" + Id +
-                ", Name='" + Name + '\'' +
-                ", startTime=" + Starttime +
-                ", endTime=" + Endtime +
-                ", allergens='" + Allergens + '\'' +
-                ", ingredients='" + Ingredients + '\'' +
-                ", price=" + Price +
-                ", menuId=" + Menuid +
+                "Id=" + id +
+                ", Name='" + name + '\'' +
+                ", startTime=" + starttime +
+                ", endTime=" + endtime +
+                ", allergens='" + allergens + '\'' +
+                ", ingredients='" + ingredients + '\'' +
+                ", price=" + price +
+                ", menuId=" + menuid +
                 '}';
     }
 }

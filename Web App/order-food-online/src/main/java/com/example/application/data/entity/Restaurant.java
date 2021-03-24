@@ -1,97 +1,103 @@
 package com.example.application.data.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Restaurant {
-    private Integer Id=null;
-    private List<Menu> Menus;
-    private String Name;
-    private String Address;
+    private Integer id =null;
+    private List<Menu> menus=null;
+    private String name;
+    private String address;
     private Map<String,String> open;
-    private String Phonenumber;
-    private String Email;
-    private String Password;
+    private String phonenumber;
+    private String email;
+    private String password;
 
     public Restaurant() {
     }
 
     public Restaurant(String name, String address, Map<String, String> openHours, String phoneNum, String email, String password) {
-        Name = name;
-        Address = address;
+        this.name = name;
+        this.address = address;
         this.open = openHours;
-        Phonenumber = phoneNum;
-        Email = email;
-        Password = password;
+        phonenumber = phoneNum;
+        this.email = email;
+        this.password = password;
     }
 
     public Restaurant(Integer id, String name, String address, Map<String, String> openHours, String phoneNum, String email, String password) {
-        Id = id;
-        Name = name;
-        Address = address;
+        this.id = id;
+        this.name = name;
+        this.address = address;
         this.open = openHours;
-        Phonenumber = phoneNum;
-        Email = email;
-        Password = password;
+        phonenumber = phoneNum;
+        this.email = email;
+        this.password = password;
     }
 
     public void addMenu(Menu m){
-        Menus.add(m);
+        if(menus==null){
+        menus=new ArrayList<>();}
+        menus.add(m);
     }
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
     }
 
     public String getPhonenumber() {
-        return Phonenumber;
+        return phonenumber;
     }
 
     public void setPhonenumber(String phoneNum) {
-        Phonenumber = phoneNum;
+        phonenumber = phoneNum;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
-    public Menu getLastMenu()
+    public Menu getLastmenu()
     {
-        return Menus.get(Menus.size());
+        if(menus==null){
+            return null;
+        }else{
+        return menus.get(menus.size()-1);}
     }
     public Menu getMenu(int slot)
     {
-        return Menus.get(slot);
+        return menus.get(slot);
     }
 
     public Map<String, String> getOpen() {
@@ -105,14 +111,14 @@ public class Restaurant {
     @Override
     public String toString() {
         return "Restaurant{" +
-                "Id=" + Id +
-                ", Menus=" + Menus +
-                ", Name='" + Name + '\'' +
-                ", Address='" + Address + '\'' +
+                "Id=" + id +
+                ", Menus=" + menus +
+                ", Name='" + name + '\'' +
+                ", Address='" + address + '\'' +
                 ", openHours=" + open +
-                ", PhoneNum='" + Phonenumber + '\'' +
-                ", Email='" + Email + '\'' +
-                ", Password='" + Password + '\'' +
+                ", PhoneNum='" + phonenumber + '\'' +
+                ", Email='" + email + '\'' +
+                ", Password='" + password + '\'' +
                 '}';
     }
 }

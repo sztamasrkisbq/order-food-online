@@ -1,5 +1,6 @@
 package com.example.application.views.restaurant.menus;
 
+import com.example.application.Singleton;
 import com.example.application.data.entity.Menu;
 import com.example.application.data.entity.Restaurant;
 import com.example.application.data.service.RestaurantClientService;
@@ -24,36 +25,37 @@ import java.util.List;
 public class RestaurantMenuView extends VerticalLayout {
     Grid<Menu> menus;
     Menu selected=new Menu();
+    Restaurant r;
+    UI ui;
     List<Menu> lista=new ArrayList<>();
-    private final RestaurantClientService service;
-
+    private RestaurantClientService service;
+    final ListDataProvider<Menu> dataProvider;
     public RestaurantMenuView(@Autowired RestaurantClientService service) {
         this.service=service;
-        this.service.getMenuList(ComponentUtil.getData(UI.getCurrent(), Restaurant.class).getId(),results -> {
-            getUI().get().access(() -> {
 
-                System.out.println(results);
-                lista=results;
-            });
-        });
         menus=new Grid<>();
-        final ListDataProvider<Menu> dataProvider = new ListDataProvider<>(
+
+        dataProvider = new ListDataProvider<>(
                 lista);
         menus.setDataProvider(dataProvider);
+
         HorizontalLayout layout=new HorizontalLayout();
         TextField name= new TextField("Menü név");
         Button add= new Button("Hozzáadás");
         Button foodadd= new Button("Étel hozzáadása");
         foodadd.setEnabled(false);
         add.addClickListener(buttonClickEvent -> {
-            Restaurant r=ComponentUtil.getData(UI.getCurrent(), Restaurant.class);
+
+            r=ComponentUtil.getData(menus.getUI().get(),Restaurant.class);
+
             r.addMenu(new Menu(name.getValue(),r.getId()));
-            this.service.addMenu(r,r.getLastMenu(),results -> {
-                dataProvider.refreshAll();
+            this.service.addMenu(r,r.getLastmenu(),results -> {
+                updateList();
             });
+
         });
         foodadd.addClickListener(buttonClickEvent -> {
-            ComponentUtil.setData(UI.getCurrent(),Menu.class,selected);
+            ComponentUtil.setData(menus.getUI().get(),Menu.class,selected);
             foodadd.getUI().ifPresent(ui ->
                     ui.navigate("etterem/listFood"));
 
@@ -64,6 +66,20 @@ public class RestaurantMenuView extends VerticalLayout {
             foodadd.setEnabled(true);
         });
         add(layout,menus);
+        ui=name.getUI().get();
+        updateList();
 
+    }
+    void updateList(){
+        this.service.getMenuList(ComponentUtil.getData(ui,Restaurant.class).getId(),results -> {
+            getUI().get().access(() -> {
+
+                System.out.println(results);
+                lista=results;
+                dataProvider.getItems().clear();
+                dataProvider.getItems().addAll(lista);
+                dataProvider.refreshAll();
+            });
+        });
     }
 }

@@ -4,67 +4,69 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private Integer Id;
-    private String Name;
-    List<Food> Foods;
-    Integer Restid;
+    private Integer id;
+    private String name;
+    List<Food> foods;
+    Integer restaurantid;
 
     public Menu(String name, Integer restId) {
-        Name = name;
-        this.Restid = restId;
+        this.name = name;
+        this.restaurantid = restId;
     }
 
     public Menu(Integer id, String name, Integer restId) {
-        Id = id;
-        Name = name;
-        this.Restid = restId;
+        this.id = id;
+        this.name = name;
+        this.restaurantid = restId;
     }
 
     public void addFood(Food f){
-        Foods.add(f);
+        if(foods==null){
+        foods =new ArrayList<>();}
+        foods.add(f);
     }
     public Menu() {
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public List<Food> getFoods() {
-        return Foods;
+        return foods;
     }
 
     public void setFoods(List<Food> foods) {
-        this.Foods = foods;
+        this.foods = foods;
     }
 
-    public Integer getRestId() {
-        return Restid;
+    public Integer getRestaurantid() {
+        return restaurantid;
     }
 
-    public void setRestId(Integer restId) {
-        this.Restid = restId;
+    public void setRestaurantid(Integer restId) {
+        this.restaurantid = restId;
     }
 
     @Override
     public String toString() {
         return "Menu{" +
-                "Id=" + Id +
-                ", Name='" + Name + '\'' +
-                ", foods=" + Foods +
-                ", restId=" + Restid +
+                "Id=" + id +
+                ", Name='" + name + '\'' +
+                ", foods=" + foods +
+                ", restId=" + restaurantid +
                 '}';
     }
 }

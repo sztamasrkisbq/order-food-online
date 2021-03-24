@@ -1,14 +1,12 @@
 package com.example.application.views.restaurant.foods;
 
-import com.example.application.data.entity.Customer;
+import com.example.application.Singleton;
 import com.example.application.data.entity.Food;
 import com.example.application.data.entity.Menu;
-import com.example.application.data.entity.Restaurant;
 import com.example.application.data.service.RestaurantClientService;
 import com.example.application.views.restaurant.main.RestaurantMainView;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
@@ -18,18 +16,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 import com.vaadin.flow.component.textfield.IntegerField;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.BinderValidationStatus;
 import com.vaadin.flow.data.binder.BindingValidationStatus;
 import com.vaadin.flow.data.provider.ListDataProvider;
-import com.vaadin.flow.data.validator.DateRangeValidator;
-import com.vaadin.flow.data.validator.EmailValidator;
-import com.vaadin.flow.data.validator.StringLengthValidator;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +40,7 @@ public class RestaurantListFoodView extends VerticalLayout {
     Grid<Food> foods;
     Food selected;
     Food f;
+    UI ui;
     List<Food> lista=new ArrayList<>();
     private final  RestaurantClientService service;
     private ListDataProvider<Food> dataProvider;
@@ -54,13 +48,7 @@ public class RestaurantListFoodView extends VerticalLayout {
     public RestaurantListFoodView(@Autowired RestaurantClientService service) {
         this.service=service;
         f=new Food();
-        this.service.getFoodList(ComponentUtil.getData(UI.getCurrent(), Menu.class).getId(),results -> {
-            getUI().get().access(() -> {
-
-                System.out.println(results);
-                lista=results;
-            });
-        });
+        ui=UI.getCurrent();
         foods=new Grid<>();
         dataProvider = new ListDataProvider<>(
                 lista);
@@ -74,6 +62,17 @@ public class RestaurantListFoodView extends VerticalLayout {
 
         add(addForm(),foods);
 
+    }
+    private void updateList(){
+        this.service.getFoodList(Singleton.getInstance().getMenu().getId(), results -> {
+            getUI().get().access(() -> {
+                System.out.println(results);
+                lista=results;
+                dataProvider.getItems().clear();
+                dataProvider.getItems().addAll(lista);
+                dataProvider.refreshAll();
+            });
+        });
     }
 
     private FormLayout addForm(){
@@ -138,9 +137,9 @@ public class RestaurantListFoodView extends VerticalLayout {
         add.addClickListener(event -> {
             if (binder.writeBeanIfValid(f)) {
                 infoLabel.setText("Étel eltárolva: " + f);
-                ComponentUtil.getData(UI.getCurrent(), Menu.class).addFood(f);
-                this.service.addFood(ComponentUtil.getData(UI.getCurrent(), Menu.class).getRestId(),ComponentUtil.getData(UI.getCurrent(), Menu.class).getId(),f,results -> {
-                    dataProvider.refreshAll();
+                ComponentUtil.getData(ui,Menu.class).addFood(f);
+                this.service.addFood(ComponentUtil.getData(ui,Menu.class).getRestaurantid(),ComponentUtil.getData(ui,Menu.class).getId(),f, results -> {
+                    updateList();
                 });
             } else {
                 BinderValidationStatus<Food> validate = binder.validate();

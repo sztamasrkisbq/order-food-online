@@ -31,7 +31,7 @@ public class RestaurantClientService extends AbstractAsyncClientService{
     public  void login(String email,String pwd, AsyncRestCallback<Restaurant> callback) {
         System.out.println("Restaurant Login REST..");
 
-        WebClient.RequestHeadersSpec<?> spec = WebClient.create().get().uri(uriBuilder -> uriBuilder.path("http://localhost:888/restaurant/login").queryParam("mail",email).queryParam("pwd",pwd).build());
+        WebClient.RequestHeadersSpec<?> spec = WebClient.create().get().uri("http://localhost:888/restaurant/login?mail="+email+"&pwd="+pwd);
 
 
         spec.retrieve().toEntity(Restaurant.class).subscribe(result -> {
@@ -41,10 +41,12 @@ public class RestaurantClientService extends AbstractAsyncClientService{
             callback.operationFinished(comments);
         });
     }
+
+
     public  void getMenuList(Integer id,AsyncRestCallback<List<Menu>> callback) {
         System.out.println("GetMenuList REST..");
 
-        WebClient.RequestHeadersSpec<?> spec = WebClient.create().get().uri(uriBuilder -> uriBuilder.path("http://localhost:888/restaurant/getMenu").queryParam("id",id).build());
+        WebClient.RequestHeadersSpec<?> spec = WebClient.create().get().uri("http://localhost:888/restaurant/getMenus?id="+id);
 
         spec.retrieve().toEntityList(Menu.class).subscribe(result -> {
 
@@ -67,7 +69,7 @@ public class RestaurantClientService extends AbstractAsyncClientService{
     }
     public  void addMenu(Restaurant r,Menu m, AsyncRestCallback<Integer> callback) {
         System.out.println("AddMenu REST..");
-        WebClient.RequestHeadersSpec<?> spec = WebClient.create().post().uri(uriBuilder -> uriBuilder.path("http://localhost:888/restaurant/addMenu").queryParam("restId",r.getId()).build()).body(Mono.just(m), Menu.class);
+        WebClient.RequestHeadersSpec<?> spec = WebClient.create().post().uri("http://localhost:888/restaurant/addMenu").body(Mono.just(m), Menu.class);
 
         spec.retrieve().toEntity(Integer.class).subscribe(result -> {
 

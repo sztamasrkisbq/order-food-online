@@ -1,5 +1,6 @@
 package com.example.application.views.customer.login;
 
+import com.example.application.Singleton;
 import com.example.application.data.entity.Customer;
 import com.example.application.data.service.CustomerClientService;
 import com.example.application.views.customer.main.CustomerMainView;
@@ -24,6 +25,7 @@ public class CustomerLoginView extends VerticalLayout {
 
     private LoginForm login;
     private Button reg;
+    Customer c;
 
     private final CustomerClientService service;
 
@@ -34,11 +36,11 @@ public class CustomerLoginView extends VerticalLayout {
 
         login.addLoginListener(loginEvent -> {
             this.service.login(loginEvent.getUsername(),loginEvent.getPassword(),results -> {
-                ComponentUtil.setData(UI.getCurrent(), Customer.class, results);
-
+                c=results;
             });
+            ComponentUtil.setData(UI.getCurrent(),"custid",c.getId());
             login.getUI().ifPresent(ui ->
-                    ui.navigate("vendeg/"));
+                    ui.navigate("vendeg/list"));
         });
         reg = new Button("Regisztráció");
         reg.addClickListener(e -> {
