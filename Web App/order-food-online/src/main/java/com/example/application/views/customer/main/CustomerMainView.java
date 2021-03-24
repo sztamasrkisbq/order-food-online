@@ -1,7 +1,7 @@
-package com.example.application.views.main;
+package com.example.application.views.customer.main;
 
-import java.util.Optional;
-
+import com.example.application.views.customer.login.CustomerLoginView;
+import com.example.application.views.customer.restaurant.CustomerRestaurantView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -9,8 +9,9 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -18,24 +19,20 @@ import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.router.PageTitle;
-import com.example.application.views.login.LoginView;
-import com.example.application.views.personform.PersonFormView;
-import com.example.application.views.masterdetail.MasterDetailView;
+import com.vaadin.flow.router.*;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
+import java.util.Optional;
+
 @CssImport("./views/main/main-view.css")
 @JsModule("./styles/shared-styles.js")
 @Push
-public class MainView extends AppLayout {
+
+public class CustomerMainView extends AppLayout {
 
     private final Tabs menu;
     private H1 viewTitle;
 
-    public MainView() {
+    public CustomerMainView() {
         setPrimarySection(Section.DRAWER);
         addToNavbar(true, createHeaderContent());
         menu = createMenu();
@@ -82,8 +79,7 @@ public class MainView extends AppLayout {
     }
 
     private Component[] createMenuItems() {
-        return new Tab[]{createTab("Hello World", LoginView.class), createTab("Person Form", PersonFormView.class),
-                createTab("Master-Detail", MasterDetailView.class)};
+        return new Tab[]{createTab("Belépés", CustomerLoginView.class),createTab("Éttermek", CustomerRestaurantView.class)};
     }
 
     private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
