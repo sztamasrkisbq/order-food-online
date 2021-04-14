@@ -26,6 +26,14 @@ public class Restaurant {
         this.password = password;
     }
 
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
+    }
+
     public Restaurant(Integer id, String name, String address, Map<String, String> openHours, String phoneNum, String email, String password) {
         this.id = id;
         this.name = name;

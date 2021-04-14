@@ -34,11 +34,9 @@ public class RestaurantLoginView extends HorizontalLayout {
         login=new LoginForm();
         reg = new Button("Regisztráció");
         login.addLoginListener(loginEvent -> {
-            this.service.login(loginEvent.getUsername(),loginEvent.getPassword(), results -> {
-
-                ComponentUtil.setData(login.getUI().get(),Restaurant.class,results);
+            r=this.service.login(loginEvent.getUsername(),loginEvent.getPassword());
+                ComponentUtil.setData(login.getUI().get(),Restaurant.class,r);
                 asd();
-            });
         });
         reg = new Button("Regisztráció");
         reg.addClickListener(e -> {

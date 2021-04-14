@@ -35,10 +35,8 @@ public class CustomerLoginView extends VerticalLayout {
         addClassName("customer-login-view");
 
         login.addLoginListener(loginEvent -> {
-            this.service.login(loginEvent.getUsername(),loginEvent.getPassword(),results -> {
-                c=results;
-            });
-            ComponentUtil.setData(UI.getCurrent(),"custid",c.getId());
+            c=this.service.login(loginEvent.getUsername(),loginEvent.getPassword());
+            ComponentUtil.setData(login.getUI().get().getCurrent(),"custid",c.getId());
             login.getUI().ifPresent(ui ->
                     ui.navigate("vendeg/list"));
         });

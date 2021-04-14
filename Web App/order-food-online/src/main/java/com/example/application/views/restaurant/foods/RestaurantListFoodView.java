@@ -1,11 +1,12 @@
 package com.example.application.views.restaurant.foods;
 
-import com.example.application.Singleton;
 import com.example.application.data.entity.Food;
 import com.example.application.data.entity.Menu;
 import com.example.application.data.service.RestaurantClientService;
 import com.example.application.views.restaurant.main.RestaurantMainView;
 import com.vaadin.flow.component.ComponentUtil;
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -23,10 +24,13 @@ import com.vaadin.flow.data.binder.BinderValidationStatus;
 import com.vaadin.flow.data.binder.BindingValidationStatus;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.BeforeLeaveEvent;
+import com.vaadin.flow.router.BeforeLeaveListener;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +39,13 @@ import java.util.stream.Collectors;
 
 @PageTitle("Ételek")
 @Route(value = "etterem/listFood",layout = RestaurantMainView.class)
-public class RestaurantListFoodView extends VerticalLayout {
+public class RestaurantListFoodView extends VerticalLayout implements BeforeLeaveListener {
 
     Grid<Food> foods;
     Food selected;
     Food f;
+    boolean addedfood=false;
+    FormLayout form;
     UI ui;
     List<Food> lista=new ArrayList<>();
     private final  RestaurantClientService service;
@@ -58,13 +64,12 @@ public class RestaurantListFoodView extends VerticalLayout {
         foods.asSingleSelect().addValueChangeListener(event->{
             selected=event.getValue();
         });
-
-
-        add(addForm(),foods);
+        form=addForm();
+        add(form,foods);
 
     }
     private void updateList(){
-        this.service.getFoodList(Singleton.getInstance().getMenu().getId(), results -> {
+        this.service.getFoodList(ComponentUtil.getData(foods.getUI().get(),Menu.class).getId(), results -> {
             getUI().get().access(() -> {
                 System.out.println(results);
                 lista=results;
@@ -138,9 +143,9 @@ public class RestaurantListFoodView extends VerticalLayout {
             if (binder.writeBeanIfValid(f)) {
                 infoLabel.setText("Étel eltárolva: " + f);
                 ComponentUtil.getData(ui,Menu.class).addFood(f);
-                this.service.addFood(ComponentUtil.getData(ui,Menu.class).getRestaurantid(),ComponentUtil.getData(ui,Menu.class).getId(),f, results -> {
-                    updateList();
-                });
+                addedfood=true;
+                this.service.addFood(ComponentUtil.getData(ui,Menu.class).getRestaurantid(),ComponentUtil.getData(ui,Menu.class).getId(),f);
+                updateList();
             } else {
                 BinderValidationStatus<Food> validate = binder.validate();
                 String errorText = validate.getFieldValidationStatuses()
@@ -158,5 +163,28 @@ public class RestaurantListFoodView extends VerticalLayout {
             infoLabel.setText("");
         });
         return foodForm;
+    }
+
+    @Override
+    public void beforeLeave(BeforeLeaveEvent beforeLeaveEvent) {
+        if (this.hasChanges()) {
+            BeforeLeaveEvent.ContinueNavigationAction action =
+                    beforeLeaveEvent.postpone();
+            Dialog dialog=new Dialog();
+            dialog.add(new Text("Elmenti a változtatásokat?"));
+            Button yesbut=new Button("Igen");
+            yesbut.addActionListener(actionEvent ->{
+                dialog.close();
+                action.proceed();
+            });
+            Button nobut=new Button("Igen");
+            yesbut.addActionListener(actionEvent ->{
+                dialog.close();
+            });
+        }
+    }
+
+    private boolean hasChanges() {
+        return addedfood;
     }
 }

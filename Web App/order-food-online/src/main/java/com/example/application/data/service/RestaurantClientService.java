@@ -1,6 +1,5 @@
 package com.example.application.data.service;
 
-import com.example.application.data.entity.Customer;
 import com.example.application.data.entity.Food;
 import com.example.application.data.entity.Menu;
 import com.example.application.data.entity.Restaurant;
@@ -13,7 +12,10 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 @Service
-public class RestaurantClientService extends AbstractAsyncClientService{
+public class RestaurantClientService implements Serializable {
+    public static interface AsyncRestCallback<T> {
+        void operationFinished(T results);
+    }
 
     public  void registerRestaurant(Restaurant r, AsyncRestCallback<Boolean> callback) {
         System.out.println("Restaurant Register REST..");
@@ -28,18 +30,12 @@ public class RestaurantClientService extends AbstractAsyncClientService{
             callback.operationFinished(comments);
         });
     }
-    public  void login(String email,String pwd, AsyncRestCallback<Restaurant> callback) {
+    public  Restaurant login(String email,String pwd) {
         System.out.println("Restaurant Login REST..");
 
         WebClient.RequestHeadersSpec<?> spec = WebClient.create().get().uri("http://localhost:888/restaurant/login?mail="+email+"&pwd="+pwd);
-
-
-        spec.retrieve().toEntity(Restaurant.class).subscribe(result -> {
-
-            System.out.println(result.toString());
-            final Restaurant comments = result.getBody();
-            callback.operationFinished(comments);
-        });
+        final Restaurant comments = spec.retrieve().toEntity(Restaurant.class).block().getBody();
+        return comments;
     }
 
 
@@ -67,17 +63,11 @@ public class RestaurantClientService extends AbstractAsyncClientService{
             callback.operationFinished(comments);
         });
     }
-    public  void addMenu(Restaurant r,Menu m, AsyncRestCallback<Integer> callback) {
+    public  void addMenu(Menu m) {
         System.out.println("AddMenu REST..");
         WebClient.RequestHeadersSpec<?> spec = WebClient.create().post().uri("http://localhost:888/restaurant/addMenu").body(Mono.just(m), Menu.class);
-
-        spec.retrieve().toEntity(Integer.class).subscribe(result -> {
-
-            System.out.println(result.toString());
-            final Integer comments = result.getBody();
-            m.setId(comments);
-            callback.operationFinished(comments);
-        });
+        final Integer comments = spec.retrieve().toEntity(Integer.class).block().getBody();
+        m.setId(comments);
     }
     public  void getFoodList(Integer id, AsyncRestCallback<List<Food>> callback) {
         System.out.println("GetFoodList REST..");
@@ -105,17 +95,11 @@ public class RestaurantClientService extends AbstractAsyncClientService{
             callback.operationFinished(comments);
         });
     }
-    public  void addFood(Integer  rid,Integer mid,Food f, AsyncRestCallback<Integer> callback) {
+    public  void addFood(Integer  rid,Integer mid,Food f) {
         System.out.println("AddFood REST..");
         WebClient.RequestHeadersSpec<?> spec = WebClient.create().post().uri(uriBuilder -> uriBuilder.path("http://localhost:888/restaurant/addFood").queryParam("restId",rid).queryParam("menuId",mid).build()).body(Mono.just(f), Food.class);
-
-        spec.retrieve().toEntity(Integer.class).subscribe(result -> {
-
-            System.out.println(result.toString());
-            final Integer comments = result.getBody();
-            f.setId(comments);
-            callback.operationFinished(comments);
-        });
+        final Integer comments = spec.retrieve().toEntity(Integer.class).block().getBody();
+        f.setId(comments);
     }
 
 }

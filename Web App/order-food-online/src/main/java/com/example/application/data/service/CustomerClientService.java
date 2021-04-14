@@ -6,11 +6,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.io.Serializable;
 import java.util.List;
 
 @SuppressWarnings("serial")
 @Service
-public class CustomerClientService extends AbstractAsyncClientService {
+public class CustomerClientService implements Serializable {
+    public static interface AsyncRestCallback<T> {
+        void operationFinished(T results);
+    }
 
     public void getRestaurantList(AsyncRestCallback<List<Restaurant>> callback) {
         System.out.println("Setting up fetching all Comment objects through REST..");
@@ -39,18 +43,12 @@ public class CustomerClientService extends AbstractAsyncClientService {
         });
     }
 
-    public void login(String email,String pwd, AsyncRestCallback<Customer> callback) {
+    public Customer login(String email,String pwd) {
         System.out.println("Login REST..");
 
         WebClient.RequestHeadersSpec<?> spec = WebClient.create().get().uri("http://localhost:888/customer/login?mail="+email+"&pwd="+pwd);
-
-
-        spec.retrieve().toEntity(Customer.class).subscribe(result -> {
-
-            System.out.println(result.toString());
-            final Customer comments = result.getBody();
+        Customer comments = spec.retrieve().toEntity(Customer.class).block().getBody();
             System.out.println(comments);
-            callback.operationFinished(comments);
-        });
+            return comments;
     }
 }
