@@ -21,9 +21,9 @@ public class Order implements Serializable{
     @Column(name="Address")
     private String Address;
 
-    @ManyToMany
+
     @JoinColumn(name="FK_FoodId", referencedColumnName = "Food_Id")
-    private List<Food> foods;
+    private String foods;
 
     @OneToOne
     @JoinColumn(name="FK_CourierId", referencedColumnName = "Courier_Id")
