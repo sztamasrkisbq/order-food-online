@@ -2,6 +2,7 @@ package com.example.accessingdatamysql.beans;
 
 import com.example.accessingdatamysql.entities.Courier;
 import com.example.accessingdatamysql.entities.Customer;
+import com.example.accessingdatamysql.entities.Order;
 
 public class OrderBean {
     private Integer id;
