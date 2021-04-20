@@ -20,4 +20,5 @@ public interface MenuRepository extends CrudRepository<Menu,Integer> {
     @Query(value="SELECT * FROM Menu m WHERE m.FK_RestaurantId=:id", nativeQuery = true)
     List<Menu> findAllByFK_RestaurantId(@Param(value="id") Integer Id);
 
+
 }

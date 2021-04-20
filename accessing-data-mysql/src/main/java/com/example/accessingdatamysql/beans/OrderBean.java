@@ -31,9 +31,9 @@ public class OrderBean {
         {
             //System.out.println(s);
             String[] splits=s.split("_");
-            Optional<Food> food;
-            food = foodRepository.findById(Integer.parseInt(splits[0]));
-            map.put(food.get(),Integer.parseInt(splits[1]));
+            Food food;
+            food = foodRepository.findById(Integer.parseInt(splits[0])).get();
+            map.put(food,Integer.parseInt(splits[1]));
         }
         return map;
     }

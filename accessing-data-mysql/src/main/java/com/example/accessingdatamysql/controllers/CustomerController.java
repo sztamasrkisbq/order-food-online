@@ -78,4 +78,10 @@ public class CustomerController {
         }
         return out;
     }
+    @GetMapping("/getCust")
+    public @ResponseBody CustomerBean getCust(@RequestParam(value = "id") Integer id) {
+        CustomerBean b=new CustomerBean(customerRepository.findById(id).get());
+        System.out.println(b.toString());
+        return b;
+    }
 }

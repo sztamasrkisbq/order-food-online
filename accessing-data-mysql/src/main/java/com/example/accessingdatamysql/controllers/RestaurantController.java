@@ -118,8 +118,8 @@ public class RestaurantController {
     }
 
     @PostMapping("/addFood")
-    public @ResponseBody Integer addFood(@RequestParam(value = "restId") Integer restid,@RequestParam(value = "menuId") Integer menuid,@RequestBody FoodBean foodBean){
-        Food f=foodRepository.save(foodBean.toEntity(getMenuInner(menuid).toEntity(getRestaurant(restid).toEntity())));
+    public @ResponseBody Integer addFood(@RequestParam(value = "menuId") Integer menuid,@RequestBody FoodBean foodBean){
+        Food f=foodRepository.save(foodBean.toEntity(getMenuInner(menuid).toEntity(getRestaurant(getMenuInner(menuid).getRestaurantid()).toEntity())));
         if(f!=null){
         return f.getId();}
         else{
