@@ -1,7 +1,11 @@
 package com.example.accessingdatamysql.controllers;
 
 import com.example.accessingdatamysql.beans.CustomerBean;
+import com.example.accessingdatamysql.beans.FoodBean;
+import com.example.accessingdatamysql.beans.MenuBean;
 import com.example.accessingdatamysql.beans.RestaurantBean;
+import com.example.accessingdatamysql.entities.Food;
+import com.example.accessingdatamysql.entities.Menu;
 import com.example.accessingdatamysql.entities.Restaurant;
 import com.example.accessingdatamysql.repositories.CustomerRepository;
 import com.example.accessingdatamysql.repositories.FoodRepository;
@@ -60,5 +64,18 @@ public class CustomerController {
         System.out.println(b.toString());
         return b;
     }
-
+    @GetMapping("/getFoods")
+    public List<MenuBean> getFoodByRestId(@RequestParam(name ="restId")Integer restId){
+        ArrayList<MenuBean> out=new ArrayList<>();
+        Iterable<Menu> rest=menuRepository.findAllByFK_RestaurantId(restId);
+        for(Menu m:rest){
+            MenuBean menuB=new MenuBean(m);
+            Iterable<Food> food=foodRepository.findAllByFK_MenuId(m.getId());
+            for (Food f:food){
+                menuB.addFood(new FoodBean(f));
+            }
+            out.add(menuB);
+        }
+        return out;
+    }
 }
