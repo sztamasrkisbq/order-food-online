@@ -46,7 +46,12 @@ public class RestaurantController {
 
     @GetMapping(path="/login")
     public @ResponseBody RestaurantBean getRestaurant(@RequestParam(value = "mail") String mail,@RequestParam(value = "pwd") String pwd) {
-        return new RestaurantBean(restaurantRepository.findByEmailAndPassword(mail,pwd));
+        RestaurantBean r=new RestaurantBean(restaurantRepository.findByEmailAndPassword(mail,pwd));
+        r.setMenu(getAllMenuById(r.getId()));
+        for(MenuBean m:r.getMenu()) {
+            m.setFoods(getAllFoodById(m.getId()));
+        }
+        return r;
     }
 
     public  RestaurantBean getRestaurant(Integer id) {
