@@ -1,9 +1,8 @@
 package com.example.accessingdatamysql.beans;
 
 import com.example.accessingdatamysql.entities.Courier;
-import com.example.accessingdatamysql.entities.Food;
 
-import java.sql.Date;
+import java.util.List;
 
 public class CourierBean {
 
@@ -12,7 +11,7 @@ public class CourierBean {
     private String email;
     private String password;
     private String phonenumber;
-    //private List<Order>
+    private List<OrderBean> listOfOrders;
 
     public CourierBean() {
 
@@ -46,16 +45,16 @@ public class CourierBean {
     public String getPhonenumber() { return phonenumber; }
     public void setPhonenumber(String phonenumber) { this.phonenumber = phonenumber; }
 
-    /*
-    * addOrder function
-    * */
+    private void addOrder(OrderBean ob){
+
+        listOfOrders.add(ob);
+    }
 
     public Courier toEntity(){
         Courier c = new Courier();
         if(c_id != null){
             c.setId(this.c_id);
         }
-        c.setId(this.c_id);
         c.setName(this.name);
         c.setEmail(this.email);
         c.setPassword(this.password);

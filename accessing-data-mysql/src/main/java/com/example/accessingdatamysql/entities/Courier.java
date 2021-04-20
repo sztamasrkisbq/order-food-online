@@ -21,9 +21,6 @@ public class Courier implements Serializable {
     @Column(name = "PhoneNumber")
     private String phonenumber;
 
-    @ManyToOne
-    @JoinColumn(name = "FK_CourierID", referencedColumnName = "Courier_ID")
-    private Courier courier;
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -40,6 +37,4 @@ public class Courier implements Serializable {
     public String getPhonenumber() { return phonenumber; }
     public void setPhonenumber(String phonenumber) { this.phonenumber = phonenumber; }
 
-    public Courier getCourier() { return courier; }
-    public void setCourier(Courier courier) { this.courier = courier; }
 }
