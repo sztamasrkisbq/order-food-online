@@ -1,6 +1,5 @@
 package com.example.accessingdatamysql.controllers;
 
-
 import com.example.accessingdatamysql.beans.CustomerBean;
 import com.example.accessingdatamysql.beans.RestaurantBean;
 import com.example.accessingdatamysql.entities.Restaurant;
