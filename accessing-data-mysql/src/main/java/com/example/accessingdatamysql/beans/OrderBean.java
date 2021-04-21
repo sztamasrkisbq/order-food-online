@@ -53,6 +53,66 @@ public class OrderBean {
         this.courier = courier;
     }
     public OrderBean(Order o){
+        id = o.getId();
+        this.name = o.getName();
+        this.phonenumber = o.getPhone();
+        this.email = o.getEmail();
+        this.address = o.getAddress();
+        this.description = o.getAddress();
+        this.customer = o.getCustomer();
+        this.courier = o.getCourier();
 
     }
+
+    @Override
+    public String toString() {
+        return "OrderBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                ", customer=" + customer +
+                ", courier=" + courier +
+                '}';
+    }
+    public Order toEntity(){
+        Order o = new Order();
+        if(id != null){
+            o.setId(this.id);
+        }
+        o.setName(this.name);
+        o.setPhone(this.phonenumber);
+        o.setEmail(this.email);
+        o.setAddress(this.address);
+        o.setDescription(this.description);
+        o.setCustomer(this.customer);
+        o.setCourier(this.courier);
+        return o;
+    }
+
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public String getPhonenumber() { return phonenumber; }
+    public void setPhonenumber(String phonenumber) { this.phonenumber = phonenumber; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public Customer getCustomer() { return customer; }
+    public void setCustomer(Customer customer) { this.customer = customer; }
+
+    public Courier getCourier() {return courier; }
+    public void setCourier(Courier courier) { this.courier = courier; }
 }
