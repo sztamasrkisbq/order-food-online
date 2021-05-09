@@ -6,8 +6,17 @@ import java.util.List;
 
 public class CourierBean {
 
-    private Integer c_id;
+    private Integer id;
     private String name;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     private String email;
     private String password;
     private String phonenumber;
@@ -18,7 +27,7 @@ public class CourierBean {
     }
 
     public CourierBean(Integer id, String name, String email, String password, String phonenumber) {
-        id = c_id;
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -26,15 +35,15 @@ public class CourierBean {
     }
 
     public CourierBean(Courier c) {
-        c_id = c.getId();
+        this.id = c.getCourierId();
         this.name = c.getName();
         this.email = c.getEmail();
         this.password = c.getPassword();
         this.phonenumber = c.getPhonenumber();
     }
 
-    public int getC_id() { return c_id; }
-    public void setC_id(int c_id) { this.c_id = c_id; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -52,8 +61,8 @@ public class CourierBean {
 
     public Courier toEntity(){
         Courier c = new Courier();
-        if(c_id != null){
-            c.setId(this.c_id);
+        if(id != null){
+            c.setCourierId(this.id);
         }
         c.setName(this.name);
         c.setEmail(this.email);
@@ -65,7 +74,7 @@ public class CourierBean {
     @Override
     public String toString() {
         return "CourierBean{" +
-                "c_id=" + c_id +
+                "c_id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +

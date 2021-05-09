@@ -1,16 +1,11 @@
 package com.example.accessingdatamysql.controllers;
 
-import com.example.accessingdatamysql.beans.CustomerBean;
-import com.example.accessingdatamysql.beans.FoodBean;
-import com.example.accessingdatamysql.beans.MenuBean;
-import com.example.accessingdatamysql.beans.RestaurantBean;
+import com.example.accessingdatamysql.beans.*;
 import com.example.accessingdatamysql.entities.Food;
 import com.example.accessingdatamysql.entities.Menu;
+import com.example.accessingdatamysql.entities.Order;
 import com.example.accessingdatamysql.entities.Restaurant;
-import com.example.accessingdatamysql.repositories.CustomerRepository;
-import com.example.accessingdatamysql.repositories.FoodRepository;
-import com.example.accessingdatamysql.repositories.MenuRepository;
-import com.example.accessingdatamysql.repositories.RestaurantRepository;
+import com.example.accessingdatamysql.repositories.*;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +26,8 @@ public class CustomerController {
     private MenuRepository menuRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
 
     @GetMapping("/getRestaurants")
@@ -64,7 +61,7 @@ public class CustomerController {
         System.out.println(b.toString());
         return b;
     }
-    @GetMapping("/getFoods")
+    @GetMapping("/getMenus")
     public List<MenuBean> getFoodByRestId(@RequestParam(name ="restId")Integer restId){
         ArrayList<MenuBean> out=new ArrayList<>();
         Iterable<Menu> rest=menuRepository.findAllByFK_RestaurantId(restId);
@@ -84,4 +81,21 @@ public class CustomerController {
         System.out.println(b.toString());
         return b;
     }
+
+    @PostMapping("/order")
+    public @ResponseBody Integer order(@RequestBody OrderBean orderBean)
+    {
+        System.out.println(orderBean.toString());
+        Order o=orderRepository.save(orderBean.toEntity());
+        if(o!=null)
+        {
+            return o.getId();
+        }
+        else {
+            return null;
+        }
+    }
+
+
+
 }

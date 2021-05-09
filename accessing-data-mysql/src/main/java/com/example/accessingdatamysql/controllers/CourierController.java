@@ -2,6 +2,7 @@ package com.example.accessingdatamysql.controllers;
 
 import com.example.accessingdatamysql.beans.CourierBean;
 import com.example.accessingdatamysql.beans.CustomerBean;
+import com.example.accessingdatamysql.entities.Courier;
 import com.example.accessingdatamysql.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,12 @@ public class CourierController {
 
     @GetMapping(path="/login")
     public @ResponseBody CourierBean getCourier(@RequestParam(name = "mail") String mail, @RequestParam(name = "pwd") String pwd) {
-        CourierBean b=new CourierBean(courierRepository.findByEmailAndPassword(mail,pwd));
+        System.out.println(mail);
+        System.out.println(pwd);
+        Courier c=courierRepository.findByEmailAndPassword(mail,pwd);
+        System.out.println(c.toString());
+        CourierBean b=new CourierBean(c);
+
         System.out.println(b.toString());
         return b;
     }

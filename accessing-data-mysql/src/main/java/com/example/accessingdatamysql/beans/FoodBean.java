@@ -2,7 +2,6 @@ package com.example.accessingdatamysql.beans;
 
 import com.example.accessingdatamysql.entities.Food;
 import com.example.accessingdatamysql.entities.Menu;
-import com.example.accessingdatamysql.entities.Restaurant;
 
 import java.sql.Date;
 
@@ -30,8 +29,8 @@ public class FoodBean {
     public FoodBean(Food f) {
         id = f.getId();
         this.name = f.getName();
-        this.starttime = f.getStartTime();
-        this.endtime = f.getEndTime();
+        this.starttime = f.getStartDate();
+        this.endtime = f.getEndDate();
         this.allergens = f.getAllergens();
         this.ingredients = f.getIngredients();
         this.price = f.getPrice();
@@ -110,8 +109,8 @@ public class FoodBean {
             f.setId(this.id);
         }
         f.setName(this.name);
-        f.setStartTime(this.starttime);
-        f.setEndTime(this.endtime);
+        f.setStartDate(this.starttime);
+        f.setEndDate(this.endtime);
         f.setPrice(this.price);
         f.setAllergens(this.allergens);
         f.setIngredients(this.ingredients);

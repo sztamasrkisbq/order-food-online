@@ -3,12 +3,13 @@ package com.example.accessingdatamysql.beans;
 import com.example.accessingdatamysql.entities.Menu;
 import com.example.accessingdatamysql.entities.Restaurant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MenuBean {
     private Integer id;
     private String name;
-    private List<FoodBean> foods;
+    private List<FoodBean> foods=new ArrayList<>();
     private Integer restaurantid;
 
     public Integer getRestaurantid() {

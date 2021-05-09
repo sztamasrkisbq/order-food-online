@@ -9,7 +9,7 @@ import java.util.List;
 public class Order implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Order_Id")
+    @Column(name="Orderid")
     private Integer Id;
 
     @Column(name="Name")
@@ -20,6 +20,11 @@ public class Order implements Serializable{
     private String Email;
     @Column(name="Address")
     private String Address;
+
+
+    @Column(name="Status")
+    private Integer Status;
+
 
     public String getDescription() {
         return Description;
@@ -43,6 +48,15 @@ public class Order implements Serializable{
     @ManyToOne
     @JoinColumn(name="FK_CustomerId", referencedColumnName = "Customer_Id")
     private Customer customer;
+
+
+    public Integer getStatus() {
+        return Status;
+    }
+
+    public void setStatus(Integer status) {
+        Status = status;
+    }
 
     public Integer getId() {
         return Id;
@@ -84,11 +98,11 @@ public class Order implements Serializable{
         Address = address;
     }
 
-    public List<Food> getFoods() {
+    public String getFoods() {
         return foods;
     }
 
-    public void setFoods(List<Food> foods) {
+    public void setFoods(String foods) {
         this.foods = foods;
     }
 

@@ -17,10 +17,10 @@ public class Food implements Serializable {
     @Column(name = "Name")
     private String Name;
 
-    @Column(name="StartDate")
-    private Date startTime;
-    @Column(name="EndDate")
-    private Date endTime;
+    @Column(name="Startdate")
+    private Date startDate;
+    @Column(name="Enddate")
+    private Date endDate;
     @Column(name="Price")
     private Integer price;
     @Column(name="Allergens")
@@ -29,7 +29,7 @@ public class Food implements Serializable {
     private String ingredients;
 
     @ManyToOne
-    @JoinColumn(name = "FK_MenuId",referencedColumnName = "Menu_Id")
+    @JoinColumn(name = "FK_Menuid",referencedColumnName = "Menu_Id")
     private Menu menu;
 
     public Integer getId() {
@@ -48,20 +48,20 @@ public class Food implements Serializable {
         Name = name;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Integer getPrice() {
