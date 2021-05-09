@@ -16,13 +16,6 @@ public class RestaurantBean {
     private String password;
     private List<MenuBean> menu;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public RestaurantBean(Restaurant r) {
         this.id=r.getId();
@@ -46,6 +39,14 @@ public class RestaurantBean {
             map.put(splits[0],splits[1]);
         }
         return map;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {

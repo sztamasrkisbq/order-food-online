@@ -8,6 +8,7 @@ import com.example.accessingdatamysql.entities.Menu;
 import com.example.accessingdatamysql.entities.Restaurant;
 import com.example.accessingdatamysql.repositories.FoodRepository;
 import com.example.accessingdatamysql.repositories.MenuRepository;
+import com.example.accessingdatamysql.repositories.OrderRepository;
 import com.example.accessingdatamysql.repositories.RestaurantRepository;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ public class RestaurantController {
     private FoodRepository foodRepository;
     @Autowired
     private MenuRepository menuRepository;
-
+    @Autowired
+    private OrderRepository orderRepository;
 
     @PostMapping(path="/register")
     public @ResponseBody Boolean addRestaurant(@RequestBody RestaurantBean rbean)
@@ -73,6 +75,7 @@ public class RestaurantController {
             return false;
         }
     }
+
     @PostMapping("/addMenu")
     public @ResponseBody Integer addMenu(@RequestBody MenuBean menuBean){
         System.out.println(menuBean.toString());
@@ -143,5 +146,24 @@ public class RestaurantController {
             return false;
         }
     }
+
+    @PostMapping(path="/updateStatus")
+    public @ResponseBody Boolean OrderChangeStatus(@RequestParam(value = "orderid") Integer orderId, @RequestParam(value = "status") Integer status){
+        if(orderRepository.updateStatusById(orderId, status) == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @PostMapping(path="/updateTime")
+    public @ResponseBody Boolean OrderChangeTime(@RequestParam(value = "orderid") Integer orderId, @RequestParam(value = "time") Integer time){
+        if(orderRepository.updateTimeById(orderId, time) == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

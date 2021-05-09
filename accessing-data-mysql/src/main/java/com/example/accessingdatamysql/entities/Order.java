@@ -21,10 +21,11 @@ public class Order implements Serializable{
     @Column(name="Address")
     private String Address;
 
-
     @Column(name="Status")
     private Integer Status;
 
+    @Column(name="Time")
+    private Integer Time;
 
     public String getDescription() {
         return Description;
@@ -105,6 +106,10 @@ public class Order implements Serializable{
     public void setFoods(String foods) {
         this.foods = foods;
     }
+
+    public Integer getTime() { return Time; }
+
+    public void setTime(Integer time) { Time = time; }
 
     public Courier getCourier() {
         return courier;

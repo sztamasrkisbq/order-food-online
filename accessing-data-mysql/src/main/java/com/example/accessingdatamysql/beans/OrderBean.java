@@ -20,10 +20,11 @@ public class OrderBean {
     private Customer customer;
     private Courier courier;
     private Map<Food,Integer> foods;
+    private Integer time;
 
     private FoodRepository foodRepository;
 
-    public OrderBean(String name, String phonenumber, String email, String address, String description, Integer status, Customer customer, Map<Food, Integer> foods) {
+    public OrderBean(String name, String phonenumber, String email, String address, String description, Integer status, Customer customer, Map<Food, Integer> foods, Integer time) {
         this.name = name;
         this.phonenumber = phonenumber;
         this.email = email;
@@ -32,6 +33,7 @@ public class OrderBean {
         this.status = status;
         this.customer = customer;
         this.foods = foods;
+        this.time = time;
     }
 
     public OrderBean(Integer id, String name, String phonenumber, String email, String address, String description, Integer status, Customer customer) {
@@ -133,6 +135,10 @@ public class OrderBean {
         this.foodRepository = foodRepository;
     }
 
+    public Integer getTime() { return time; }
+
+    public void setTime(Integer time) { this.time = time; }
+
     private Map<Food,Integer>getfood(String open){
         //System.out.println(open);
         Map<Food,Integer> map =new HashMap<>();
@@ -171,7 +177,7 @@ public class OrderBean {
         this.description = o.getAddress();
         this.customer = o.getCustomer();
         this.courier = o.getCourier();
-
+        this.time = o.getTime();
     }
 
     @Override
@@ -185,6 +191,7 @@ public class OrderBean {
                 ", description='" + description + '\'' +
                 ", customer=" + customer +
                 ", courier=" + courier +
+                "time=" + time +
                 '}';
     }
     public Order toEntity(){
@@ -199,6 +206,7 @@ public class OrderBean {
         o.setDescription(this.description);
         o.setCustomer(this.customer);
         o.setCourier(this.courier);
+        o.setTime(this.time);
         return o;
     }
 

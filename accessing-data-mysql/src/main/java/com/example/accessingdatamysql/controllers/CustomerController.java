@@ -55,6 +55,19 @@ public class CustomerController {
         }
     }
 
+    @PostMapping(path="/addOrder")
+    public @ResponseBody Integer addOrder(@RequestBody OrderBean orderBean)
+    {
+        Order o = orderRepository.save(orderBean.toEntity());
+        if(o != null)
+        {
+            return o.getId();
+        }
+        else {
+            return null;
+        }
+    }
+
     @GetMapping(path="/login")
     public @ResponseBody CustomerBean getCustomer(@RequestParam(name = "mail") String mail, @RequestParam(name = "pwd") String pwd) {
         CustomerBean b=new CustomerBean(customerRepository.findByEmailAndPassword(mail,pwd));
