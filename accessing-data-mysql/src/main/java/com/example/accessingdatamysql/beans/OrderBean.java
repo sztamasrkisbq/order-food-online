@@ -163,29 +163,47 @@ public class OrderBean {
         this.courier = courier;
     }
     public OrderBean(Order o,FoodRepository repo){
+        id = o.getId();
+        this.name = o.getName();
+        this.phonenumber = o.getPhone();
+        this.email = o.getEmail();
+        this.address = o.getAddress();
+        this.description = o.getAddress();
+        this.customer = o.getCustomer();
+        this.courier = o.getCourier();
 
     }
 
-    public Order toEntity()
-    {
-        Order o=new Order();
-        if(this.id!=null)
-        {
-            o.setId(getId());
+    @Override
+    public String toString() {
+        return "OrderBean{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                ", customer=" + customer +
+                ", courier=" + courier +
+                '}';
+    }
+    public Order toEntity(){
+        Order o = new Order();
+        if(id != null){
+            o.setId(this.id);
         }
-
-        o.setAddress(getAddress());
-        o.setCustomer(getCustomer());
-        o.setEmail(getEmail());
-        o.setDescription(getDescription());
-        o.setName(getName());
-        o.setStatus(getStatus());
-        o.setFoods(getfoodString());
-        o.setPhone(getPhonenumber());
-        return null;
+        o.setName(this.name);
+        o.setPhone(this.phonenumber);
+        o.setEmail(this.email);
+        o.setAddress(this.address);
+        o.setDescription(this.description);
+        o.setCustomer(this.customer);
+        o.setCourier(this.courier);
+        return o;
     }
 
-    private String getfoodString() {
+    }
+private String getfoodString() {
             String out="";
             for(Map.Entry<Food,Integer> e:foods.entrySet())
             {
@@ -195,4 +213,3 @@ public class OrderBean {
             return out;
 
     }
-}
