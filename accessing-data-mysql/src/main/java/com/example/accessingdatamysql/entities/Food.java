@@ -3,7 +3,7 @@ package com.example.accessingdatamysql.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Food")
@@ -18,9 +18,9 @@ public class Food implements Serializable {
     private String Name;
 
     @Column(name="Startdate")
-    private Date startDate;
+    private LocalDate startDate;
     @Column(name="Enddate")
-    private Date endDate;
+    private LocalDate endDate;
     @Column(name="Price")
     private Integer price;
     @Column(name="Allergens")
@@ -48,19 +48,19 @@ public class Food implements Serializable {
         Name = name;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

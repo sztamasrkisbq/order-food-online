@@ -3,19 +3,19 @@ package com.example.accessingdatamysql.beans;
 import com.example.accessingdatamysql.entities.Food;
 import com.example.accessingdatamysql.entities.Menu;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class FoodBean {
     private Integer id;
     private String name;
-    private Date starttime;
-    private Date endtime;
+    private LocalDate starttime;
+    private LocalDate endtime;
     private String allergens;
     private String ingredients;
     private Integer price;
     private Integer menuid;
 
-    public FoodBean(Integer id, String name, Date startTime, Date endTime, String allergens, String ingredients, Integer price,Integer menuId) {
+    public FoodBean(Integer id, String name, LocalDate startTime, LocalDate endTime, String allergens, String ingredients, Integer price,Integer menuId) {
         id = id;
         this.name = name;
         this.starttime = startTime;
@@ -63,19 +63,19 @@ public class FoodBean {
         this.name = name;
     }
 
-    public Date getStarttime() {
+    public LocalDate getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(Date startTime) {
+    public void setStarttime(LocalDate startTime) {
         this.starttime = startTime;
     }
 
-    public Date getEndtime() {
+    public LocalDate getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(Date endTime) {
+    public void setEndtime(LocalDate endTime) {
         this.endtime = endTime;
     }
 

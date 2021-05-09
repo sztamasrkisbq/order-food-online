@@ -202,7 +202,7 @@ public class OrderBean {
         return o;
     }
 
-    }
+
 private String getfoodString() {
             String out="";
             for(Map.Entry<Food,Integer> e:foods.entrySet())
@@ -212,4 +212,4 @@ private String getfoodString() {
             out.replace(out.substring(out.length()),"");
             return out;
 
-    }
+}    }
